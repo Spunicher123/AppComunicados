@@ -1,0 +1,21 @@
+$topbarLeftBg:#0dcaf0;
+$topbarRightBg:#0dcaf0;
+$topbarTextColor:#ffffff;
+$menuBg:#ffffff;
+$menuitemHoverBgColor:transparent;
+$menuitemHoverTextColor:#0dcaf0;
+$menuitemActiveColor:#0aa2c0;
+$menuitemActiveBgColor:transparent;
+$menuButtonBgColor:#ffffff;
+$menuButtonColor:#0dcaf0;
+$badgeBgColor:#dc3545;
+$badgeColor:#ffffff;
+$darkMenuBg:#2a323d;
+$darkMenuHoverBgColor:transparent;
+$darkMenuHoverTextColor:#6edff6;
+$darkMenuRootMenuitemColor: rgba(255, 255, 255, 0.65);
+$darkMenuMenuitemColor:#ffffff;
+$darkMenuMenuitemActiveColor:#6edff6;
+$darkMenuMenuitemActiveBgColor:transparent;
+
+@import '../../sass/layout/_layout';

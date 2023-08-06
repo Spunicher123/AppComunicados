@@ -1,0 +1,398 @@
+<form [formGroup]='comunicado'>
+    <div class="p-grid" style="background-color: #f2f2f7;">
+        <div class="p-col-12 p-md-12" style="margin-top: rem 0.5 !important; ">
+            <div class="card">
+                <p-toolbar>
+                    <div class="p-toolbar-group-left">
+                        <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-outlined "
+                            style="margin-left: 5px;" (click)="vaciarComunicados()"></button>
+
+                        <button pButton pRipple type="button" [style]="{'margin-left': '10px'}"
+                            icon="pi pi-external-link" class="p-button-outlined" label="CLIENTES"
+                            (click)="visibleSidebar1 = true"></button>
+
+                        <button pButton pRipple type="button" [style]="{'margin-left': '10px'}"
+                            icon="pi pi-external-link" class="p-button-outlined" label="COMUNICADOS"
+                            (click)="visibleSidebar2 = true"></button>
+                    </div>
+                    <div class="p-toolbar-group-left">
+                        <label class="p-text-bold">COMUNICADOS</label>
+                    </div>
+                </p-toolbar>
+            </div>
+        </div>
+
+        <div class="p-col-12 p-md-12" style="margin-top: 0.5em; ">
+            <div class="card">
+                <label class="m-2 p-1">N° Comunicado</label>
+                <input class="m-2 p-1" type="text" pInputText disabled formControlName="id" />
+
+                <label class="m-2 p-1">Titulo</label>
+                <input class="m-2 p-1" type="text" pInputText formControlName="titulo" />
+
+                <label class="m-2 p-1">Descripcion</label>
+                <input class="m-2 p-1" type="text" pInputText formControlName="descripcion" />
+
+                <label class="m-2 p-1">Link</label>
+                <input class="m-2 p-1" type="text" pInputText formControlName="link" />
+            </div>
+        </div>
+
+        <div class="p-col-12 p-md-12" style="margin-top: 0.5rem; ">
+            <div class="card">
+                <p-table [scrollable]="true" scrollHeight="390px" [value]="lstDetalles" [(selection)]="selectDetalles"
+                    [paginator]="true" [rows]="20" [showCurrentPageReport]="true"
+                    currentPageReportTemplate="{totalRecords}, Total a mostrar {rows} item(s), {first} de  {last}"
+                    selectionMode="single">
+                    <ng-template pTemplate="header">
+                        <tr>
+
+                            <th style="min-width: 290px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                    border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="nombre">
+
+                                <b> <p-sortIcon field="nombre"></p-sortIcon> Nombre <p-columnFilter type="text"
+                                        field="nombre" display="menu"></p-columnFilter></b>
+                            </th>
+
+                            <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                    border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="telefono">
+
+                                <b>Telefono <p-sortIcon field="telefono"></p-sortIcon></b>
+                            </th>
+
+                            <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                    border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="email">
+
+                                <b>Email <p-sortIcon field="email"></p-sortIcon></b>
+                            </th>
+
+                            <th style="min-width: 160px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                    border:  2px solid rgba(255, 255, 255, 0.638);" >
+
+                                <b>Opciones</b>
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-detalles>
+                        <tr [pSelectableRow]="detalles">
+
+                            <td style="min-width: 290px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                        border:  2px solid rgba(96, 96, 96, 0.167);">
+                                {{detalles.nombre}}
+                            </td>
+
+                            <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                        border:  2px solid rgba(96, 96, 96, 0.167);">
+                                {{detalles.telefono}}
+                            </td>
+
+                            <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                        border:  2px solid rgba(96, 96, 96, 0.167);">
+                                {{detalles.email}}
+                            </td>
+
+                            <td style="min-width: 160px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                        border:  2px solid rgba(96, 96, 96, 0.167);">
+                                <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar"
+                                    style="color: rgb(242, 14, 14);" class="p-button-outlined m-1"
+                                    (click)="eliminarDetalle(detalles.id)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="12">No se encontraron resultados.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]='cliente'>
+    <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="100" [fullScreen]="true"
+        [style]="{'background-color': '#f2f2f7'}">
+        <div class="p-grid" style="background-color: #f2f2f7;">
+            <div class="p-col-12 p-md-12" style="margin-top: rem 0.5 !important; ">
+                <div class="card">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-outlined "
+                                style="margin-left: 5px;" (click)="vaciarDatosClientes()" pTooltip="Limpiar"></button>
+
+                            <button pButton pRipple type="button" [style]="{'margin-left': '10px'}" icon="pi pi-search"
+                                class="p-button-outlined" (click)="buscarClientes()" pTooltip="Buscar"></button>
+
+                            <button pButton pRipple type="button" icon="pi pi-save" class="p-button-outlined "
+                                style="margin-left: 10px;" *ngIf="idCliente == null" (click)="guardarClientes()"
+                                [disabled]="cliente.invalid" pTooltip="Guardar"></button>
+
+                            <button pButton pRipple type="button" icon="pi pi-save" class="p-button-outlined "
+                                style="margin-left: 10px;" *ngIf="idCliente != null" (click)="actualizarClientes()"
+                                [disabled]="cliente.invalid" pTooltip="Actualizar" ></button>
+
+                            <button pButton pRipple type="button" icon="pi pi-check-circle" class="p-button-outlined "
+                                style="margin-left: 10px;"[disabled]="comunicado.invalid"
+                                 (click)="guardarComunicados()" pTooltip="Guardar Comunicado"></button>
+                        </div>
+                        <div class="p-toolbar-group-left">
+                            <label class="p-text-bold">CLIENTES</label>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-12" style="margin-top: 0.5em; ">
+                <div class="card">
+                    <label class="m-2 p-1">Codigo</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="id" disabled />
+
+                    <label class="m-2 p-1">Nombre</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="nombre" />
+
+                    <label class="m-2 p-1">Telefono</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="telefono" />
+
+                    <label class="m-2 p-1">Email</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="email" />
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-12" style="margin-top: 0.5rem; ">
+                <div class="card">
+                    <p-table [scrollable]="true" scrollHeight="390px" [value]="lstClientes"
+                        [(selection)]="selectClientes" [paginator]="true" [rows]="20" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="{totalRecords}, Total a mostrar {rows} item(s), {first} de  {last}"
+                        selectionMode="multiple">
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th style="min-width: 40px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+
+
+                                <th style="min-width: 130px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="id">
+
+                                    <b> <p-sortIcon field="id"></p-sortIcon> Codigo <p-columnFilter type="text"
+                                            field="id" display="menu"></p-columnFilter></b>
+                                </th>
+
+
+                                <th style="min-width: 290px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="nombre">
+
+                                    <b> <p-sortIcon field="nombre"></p-sortIcon> Nombre <p-columnFilter type="text"
+                                            field="nombre" display="menu"></p-columnFilter></b>
+                                </th>
+
+                                <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="telefono">
+
+                                    <b>Telefono <p-sortIcon field="telefono"></p-sortIcon></b>
+                                </th>
+
+                                <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="email">
+
+                                    <b>Email <p-sortIcon field="email"></p-sortIcon></b>
+                                </th>
+
+                                <th style="min-width: 160px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+            border:  2px solid rgba(255, 255, 255, 0.638);">
+
+                                    <b>Opciones</b>
+                                </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-cliente>
+                            <tr [pSelectableRow]="cliente">
+
+                                <td style="min-width: 40px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    <p-tableCheckbox [value]="cliente"></p-tableCheckbox>
+                                </td>
+
+                                <td style="min-width: 130px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{cliente.id}}
+                                </td>
+
+                                <td style="min-width: 290px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{cliente.nombre}}
+                                </td>
+
+                                <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{cliente.telefono }}
+                                </td>
+
+                                <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{cliente.email }}
+                                </td>
+
+                                <td style="min-width: 160px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar"
+                                        style="color: rgb(242, 14, 14);" class="p-button-outlined m-1"
+                                        (click)="eliminarCliente(cliente.id)"></button>
+
+                                    <button pButton pRipple type="button" icon="pi pi-user-edit" pTooltip="Editar"
+                                        class="p-button-outlined m-1" (click)="obtenerCliente(cliente.id)"></button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="12">No se encontraron resultados.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </p-sidebar>
+</form>
+
+<form [formGroup]='comunicadoA'>
+    <p-sidebar [(visible)]="visibleSidebar2" [baseZIndex]="100" [fullScreen]="true"
+        [style]="{'background-color': '#f2f2f7'}">
+        <div class="p-grid" style="background-color: #f2f2f7;">
+            <div class="p-col-12 p-md-12" style="margin-top: rem 0.5 !important; ">
+                <div class="card">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <button pButton pRipple type="button" icon="pi pi-sync" class="p-button-outlined "
+                                style="margin-left: 5px;" 
+                                (click)="vaciarComunicadosA()" pTooltip="Limpiar"></button>
+
+                            <button pButton pRipple type="button" [style]="{'margin-left': '10px'}" icon="pi pi-search"
+                                class="p-button-outlined" (click)="buscarComunicados()" pTooltip="Buscar"></button>
+
+                            <button pButton pRipple type="button" [style]="{'margin-left': '10px'}" icon="pi pi-save"
+                                class="p-button-outlined"  (click)="actualizarComunicados()"
+                                [disabled]="comunicadoA.invalid" pTooltip="Actualizar"></button>
+                        </div>
+                        <div class="p-toolbar-group-left">
+                            <label class="p-text-bold">COMUNICADOS</label>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-12" style="margin-top: 0.5em; ">
+                <div class="card">
+                    <label class="m-2 p-1">Codigo</label>
+                    <input class="m-2 p-1" type="text" pInputText disabled formControlName="idA" />
+
+                    <label class="m-2 p-1">Titulo</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="tituloA" />
+
+                    <label class="m-2 p-1">Descripcion</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="descripcionA" />
+
+                    <label class="m-2 p-1">link</label>
+                    <input class="m-2 p-1" type="text" pInputText formControlName="linkA" />
+                </div>
+            </div>
+
+            <div class="p-col-12 p-md-12" style="margin-top: 0.5rem; ">
+                <div class="card">
+                    <p-table [scrollable]="true" scrollHeight="390px" [value]="lstComunicados"
+                        [(selection)]="selectcomunicados" [paginator]="true" [rows]="20" [showCurrentPageReport]="true"
+                        (onRowSelect)="obtenerDetallesComunicado(selectcomunicados.id)"
+                        currentPageReportTemplate="{totalRecords}, Total a mostrar {rows} item(s), {first} de  {last}"
+                        selectionMode="single">
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th style="min-width: 130px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="id">
+
+                                    <b> <p-sortIcon field="id"></p-sortIcon> Codigo <p-columnFilter type="text"
+                                            field="id" display="menu"></p-columnFilter></b>
+                                </th>
+
+
+                                <th style="min-width: 290px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="titulo">
+
+                                    <b> <p-sortIcon field="titulo"></p-sortIcon> Titulo </b>
+                                </th>
+
+                                <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="descripcion">
+
+                                    <b>Descripcion<p-sortIcon field="descripcion"></p-sortIcon></b>
+                                </th>
+
+                                <th style="min-width: 140px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                            border:  2px solid rgba(255, 255, 255, 0.638);" pSortableColumn="link">
+
+                                    <b>link<p-sortIcon field="link"></p-sortIcon></b>
+                                </th>
+
+                                <th style="min-width: 160px; max-height: 40px; font-size: 11px; background-color: #EAEDED; justify-content: center; align-items: center;
+                border:  2px solid rgba(255, 255, 255, 0.638);">
+
+                                    <b>Opciones</b>
+                                </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-comunicado>
+                            <tr [pSelectableRow]="comunicado">
+                                <td style="min-width: 130px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                    border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{comunicado.id}}
+                                </td>
+
+                                <td style="min-width: 290px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                    border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{comunicado.titulo}}
+                                </td>
+
+                                <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                    border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{comunicado.descripcion}}
+                                </td>
+
+                                <td style="min-width: 140px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                            border:  2px solid rgba(96, 96, 96, 0.167);">
+                                    {{comunicado.link}}
+                                </td>
+
+                                <td style="min-width: 160px; max-height: 40px; font-size: 11px; text-align: center; justify-content: center;
+                    border:  2px solid rgba(96, 96, 96, 0.167);">
+
+                                    <button pButton pRipple type="button" icon="pi pi-trash" pTooltip="Eliminar"
+                                        style="color: rgb(242, 14, 14);" class="p-button-outlined m-1"
+                                        (click)="eliminarComunicados(comunicado.id)"></button>
+
+                                    <button pButton pRipple type="button" icon="pi pi-pencil"
+                                        style="height: 30px; width: 30px;" pTooltip="Editar"
+                                        class="p-button-outlined m-1"
+                                        (click)="obtenerComunicado(comunicado.id)"></button>
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="12">No se encontraron resultados.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </p-sidebar>
+</form>

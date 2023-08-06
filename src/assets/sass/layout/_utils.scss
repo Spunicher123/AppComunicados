@@ -1,0 +1,24 @@
+/* Utils */
+.clearfix:after {
+    content:" ";
+    display:block;
+    clear:both;
+}
+
+.card {
+    @include border-radius($borderRadius);
+    background: var(--surface-card);
+    padding: 16px;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+
+    .card-header {
+      @include flex();
+      @include flex-align-center();
+      @include flex-justify-between();
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}

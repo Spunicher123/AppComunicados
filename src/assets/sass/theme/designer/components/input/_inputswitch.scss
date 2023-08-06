@@ -1,0 +1,117 @@
+@use 'sass:math';
+
+.p-inputswitch {
+
+    .p-inputswitch-slider {
+        background: $inputSwitchSliderOffBg;
+        transition: $formElementTransition;
+        border-radius: $inputSwitchBorderRadius;
+
+        &:before {
+            background: $inputSwitchHandleOffBg;
+            width: $inputSwitchHandleWidth;
+            height: $inputSwitchHandleHeight;
+            left: $inputSwitchSliderPadding;
+            margin-top: math.div(-1 * $inputSwitchHandleHeight, 2);
+            border-radius: $inputSwitchHandleBorderRadius;
+            transition-duration: $transitionDuration;
+        }
+    }
+
+    &.p-inputswitch-checked {
+        .p-inputswitch-slider:before {
+            transform: translateX($inputSwitchHandleWidth);
+        }
+    }
+
+    &.p-focus {
+        .p-inputswitch-slider {
+            @include focused();
+        }
+    }
+
+    &:not(.p-disabled):hover {
+        .p-inputswitch-slider {
+            background: $inputSwitchSliderOffHoverBg;
+        }
+    }
+
+    &.p-inputswitch-checked {
+        .p-inputswitch-slider {
+            background: $inputSwitchSliderOnBg;
+
+            &:before {
+                background: $inputSwitchHandleOnBg;
+             }
+        }
+
+        &:not(.p-disabled):hover {
+            .p-inputswitch-slider {
+                background: $inputSwitchSliderOnHoverBg;
+            }
+        }
+    }
+
+    &.p-inputswitch-sm{
+        @include scaledComponentSize($inputSwitchWidth, $inputSwitchHeight, $scaleSM);
+
+        .p-inputswitch-slider {
+            background: $inputSwitchSliderOffBg;
+            transition: $formElementTransition;
+            border-radius: $inputSwitchBorderRadius;
+    
+            &:before {
+                @include scaledComponentSize($inputSwitchHandleWidth, $inputSwitchHandleHeight, $scaleSM);
+                background: $inputSwitchHandleOffBg;
+                left: math.div($inputSwitchSliderPadding, 2);
+                margin-top: math.div(-1 * $inputSwitchHandleHeight, 2.3);
+                border-radius: $inputSwitchHandleBorderRadius;
+                transition-duration: $transitionDuration;
+            }
+        }
+    }
+
+    &.p-inputswitch-md{
+        width: $inputSwitchWidth;
+        height: $inputSwitchHeight;
+
+        .p-inputswitch-slider {
+            background: $inputSwitchSliderOffBg;
+            transition: $formElementTransition;
+            border-radius: $inputSwitchBorderRadius;
+    
+            &:before {
+                background: $inputSwitchHandleOffBg;
+                width: $inputSwitchHandleWidth;
+                height: $inputSwitchHandleHeight;
+                left: $inputSwitchSliderPadding;
+                margin-top: math.div(-1 * $inputSwitchHandleHeight, 2);
+                border-radius: $inputSwitchHandleBorderRadius;
+                transition-duration: $transitionDuration;
+            }
+        }
+    }
+
+    &.p-inputswitch-lg{
+        @include scaledComponentSize($inputSwitchWidth, $inputSwitchHeight, $scaleLG);
+
+        .p-inputswitch-slider {
+            background: $inputSwitchSliderOffBg;
+            transition: $formElementTransition;
+            border-radius: $inputSwitchBorderRadius;
+    
+            &:before {
+                @include scaledComponentSize($inputSwitchHandleWidth, $inputSwitchHandleHeight, $scaleLG);
+                background: $inputSwitchHandleOffBg;
+                left: math.div($inputSwitchSliderPadding, 0.5);
+                margin-top: math.div(-1 * $inputSwitchHandleHeight, 1.6);
+                border-radius: $inputSwitchHandleBorderRadius;
+                transition-duration: $transitionDuration;
+            }
+        }
+    }
+}
+
+p-inputswitch.ng-dirty.ng-invalid > .p-inputswitch {
+    @include invalid-input();
+}
